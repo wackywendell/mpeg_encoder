@@ -22,9 +22,9 @@ use std::iter::FromIterator;
 use std::mem;
 use std::path::{Path, PathBuf};
 use std::ptr;
-use std::sync::{Once, ONCE_INIT};
+use std::sync::Once;
 
-static mut AVFORMAT_INIT: Once = ONCE_INIT;
+static mut AVFORMAT_INIT: Once = Once::new();
 
 /// MPEG video recorder.
 pub struct Encoder {
@@ -216,7 +216,7 @@ impl Encoder {
                 &(*self.tmp_frame).linesize[0],
                 0,
                 height as i32,
-                &(*self.frame).data[0] as *const *mut u8 as *const *const u8,
+                &(*self.frame).data[0] as *const *mut u8,
                 &(*self.frame).linesize[0],
             );
         }
